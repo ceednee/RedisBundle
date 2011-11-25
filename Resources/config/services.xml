@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="highco_redis.adapter_class">Highco\Bundle\RedisBundle\Adapter\Pecl</parameter>
+        <parameter key="highco_redis.entity_serializer">Highco\Bundle\RedisBundle\Entity\Serializer\JmsSerializerBridge</parameter>
+        <parameter key="highco_redis.entity_persister">Highco\Bundle\RedisBundle\Entity\Persister</parameter>
+        <!--<parameter key="highco_redis.entity_retriever">Highco\Bundle\RedisBundle\Entity\Retriever</parameter>-->
+    </parameters>
+
+    <services>
+        <service id="highco_redis.adapter" class="%highco_redis.adapter_class%"></service>
+        <service id="highco_redis.entity_serializer" class="%highco_redis.entity_serializer%">
+            <argument type="service" id="jms_serializer.serializer" />
+        </service>
+        <service id="highco_redis.entity_persister" class="%highco_redis.entity_persister%">
+            <argument type="service" id="highco_redis.adapter" />
+            <argument type="service" id="highco_redis.entity_serializer" />
+        </service>
+        <!--
+        <service id="Highco_redis.entity_retriever" class="%Highco_redis.entity_retriever%">
+            <argument type="service" id="Highco_redis.adapter" />
+            <argument type="service" id="jms_serializer.serializer" />
+        </service>
+        -->
+
+    </services>
+</container>
