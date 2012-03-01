@@ -8,6 +8,7 @@ use Highco\Bundle\RedisBundle\Entity\Serializer\ISerializer as IEntitySerializer
 class Persister
 {
     private $adapter;
+    private $serializer;
 
     /**
      * __construct
